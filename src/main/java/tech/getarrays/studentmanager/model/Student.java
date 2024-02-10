@@ -2,6 +2,10 @@ package tech.getarrays.studentmanager.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Student implements Serializable {
@@ -15,6 +19,23 @@ public class Student implements Serializable {
     private String email;
     @Column(nullable = false, updatable = false)
     private String studentCode;
+
+    @OneToMany(mappedBy = "student")
+    private Set<StudentCourse> followedCourses = new HashSet<>();
+
+    /*
+    @ManyToMany
+    @JoinTable(
+            name = "followed_Courses",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id"),
+            private String status;
+    )
+    private List<Course> followedCourses = new ArrayList<>();
+    public void followCourses(Course course){
+        followedCourses.add(course);
+    }
+    */
 
     public Student() {}
 
@@ -82,6 +103,7 @@ public class Student implements Serializable {
                 ", familyName='" + familyName + '\'' +
                 ", birthDate='" + birthDate + '\'' +
                 ", email='" + email + '\'' +
+                ", studentCode='" + studentCode + '\'' +
                 '}';
     }
 }
